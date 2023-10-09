@@ -62,7 +62,15 @@ namespace WebApiProsegur.Controllers
                 else
                 {
 
-                    var listausuario = lista.Where<OrdenEntity>(x => x.IdUsuario == filtro.idusuario && x.IdTienda == filtro.idtienda);
+                    IEnumerable<OrdenEntity> listausuario;
+                    if (filtro.idusuario == 0)
+                    {
+                        listausuario = lista.Where<OrdenEntity>(x => x.IdTienda == filtro.idtienda);
+                    }
+                    else
+                    {
+                        listausuario = lista.Where<OrdenEntity>(x => x.IdUsuario == filtro.idusuario && x.IdTienda == filtro.idtienda);
+                    }
                     var query = from detalle in listaDetalleOrden
                                 join ord in listausuario on detalle.IdOrden equals ord.Id
                                 select new { Id = detalle.Id, IdItems = detalle.IdItems, IdOrden = detalle.IdOrden };
