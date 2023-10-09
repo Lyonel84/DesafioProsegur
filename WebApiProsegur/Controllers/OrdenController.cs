@@ -145,7 +145,7 @@ namespace WebApiProsegur.Controllers
                         foreach (var item2 in Listamat)
                         {
                             var omat = await Context.Materiales.FindAsync(item2.IdMaterial);
-                            omat.Cantidad = omat.Cantidad - item.Cantidad;
+                            omat.Cantidad -=  item.Cantidad;
                             await Context.SaveChangesAsync();
                         }
                     
@@ -192,7 +192,7 @@ namespace WebApiProsegur.Controllers
                         foreach (var idet in listDet)
                         {
                             var oItem = await Context.Items.FindAsync(idet.IdItems);
-                            subtotal = subtotal + (idet.Cantidad * (oItem == null ? 0 : oItem.Precio));
+                            subtotal +=  (idet.Cantidad * (oItem == null ? 0 : oItem.Precio));
                             idet.IdOrden = idNew;
 
                             Context.Add(idet);
@@ -220,7 +220,7 @@ namespace WebApiProsegur.Controllers
                         foreach (var idet in listDet)
                         {
                             var oItem = await Context.Items.FindAsync(idet.IdItems);
-                            subtotal = subtotal + (idet.Cantidad * (oItem == null ? 0 : oItem.Precio));
+                            subtotal +=  (idet.Cantidad * (oItem == null ? 0 : oItem.Precio));
                             if (idet.Id == 0)
                             {                               
                                 idet.IdOrden = (int)Item.id;
